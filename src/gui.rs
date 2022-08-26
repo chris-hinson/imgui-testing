@@ -4,6 +4,7 @@ use imgui::Context;
 use imgui_glow_renderer::AutoRenderer;
 use imgui_sdl2_support::SdlPlatform;
 use rand::Rng;
+use sdl2::sys::SDL_GL_SetAttribute;
 use sdl2::{
     event::Event,
     keyboard::Keycode,
@@ -24,6 +25,8 @@ pub fn run_gui() {
 
     /* hint SDL to initialize an OpenGL 3.3 core profile context */
     let gl_attr = video_subsystem.gl_attr();
+    //TODO:REMOVE ME IF YOU DONT WANT A DEBUG CONTEXT
+    gl_attr.set_context_flags().debug().set();
 
     gl_attr.set_context_version(3, 3);
     gl_attr.set_context_profile(GLProfile::Core);
@@ -63,10 +66,15 @@ pub fn run_gui() {
 
     let mut textures = imgui::Textures::<glow::Texture>::default();
 
-    //let mut canvas = window.into_canvas().build().unwrap();
     let mut frame: Vec<u8> = vec![200; 184_320];
 
     mutate(&mut frame);
+
+    unsafe {
+        renderer.gl_context().enable(glow::DEBUG_OUTPUT);
+        renderer.gl_context().enable(glow::DEBUG_OUTPUT_SYNCHRONOUS);
+        renderer.gl_context().debug_message_callback(debug_handler);
+    }
 
     let test_texture = screen::new(&renderer.gl_context(), &mut textures, &frame);
     'main: loop {
@@ -200,5 +208,23 @@ fn mutate(buffer: &mut Vec<u8>) {
         buffer[new_y * 3 * 256 + new_x * 3] = new_r;
         buffer[new_y * 3 * 256 + new_x * 3 + 1] = new_g;
         buffer[new_y * 3 * 256 + new_x * 3 + 2] = new_b;
+    }
+}
+
+fn debug_handler(source: u32, err_type: u32, id: u32, severity: u32, msg: &str) {
+    match severity {
+        glow::DEBUG_SEVERITY_NOTIFICATION => {
+            println!("NOTIFICATION: {}", msg)
+        }
+        glow::DEBUG_SEVERITY_LOW => {
+            println!("INFO: {}", msg)
+        }
+        glow::DEBUG_SEVERITY_MEDIUM => {
+            println!("WARNING: {}", msg)
+        }
+        glow::DEBUG_SEVERITY_HIGH => {
+            println!("ERROR: {}", msg)
+        }
+        _ => println!("got an error with an invalid severity level"),
     }
 }
