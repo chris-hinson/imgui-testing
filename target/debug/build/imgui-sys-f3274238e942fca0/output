@@ -1,0 +1,36 @@
+cargo:DEFINE_IMGUI_USE_WCHAR32=
+cargo:DEFINE_CIMGUI_NO_EXPORT=
+cargo:DEFINE_IMGUI_DISABLE_WIN32_FUNCTIONS=
+cargo:DEFINE_IMGUI_DISABLE_OSX_FUNCTIONS=
+cargo:THIRD_PARTY=/home/chris/.cargo/git/checkouts/imgui-rs-61ccdc9370f94e57/2d49ef7/imgui-sys/third-party/imgui-master
+OPT_LEVEL = Some("0")
+TARGET = Some("x86_64-unknown-linux-gnu")
+HOST = Some("x86_64-unknown-linux-gnu")
+CXX_x86_64-unknown-linux-gnu = None
+CXX_x86_64_unknown_linux_gnu = None
+HOST_CXX = None
+CXX = None
+CXXFLAGS_x86_64-unknown-linux-gnu = None
+CXXFLAGS_x86_64_unknown_linux_gnu = None
+HOST_CXXFLAGS = None
+CXXFLAGS = None
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("true")
+CARGO_CFG_TARGET_FEATURE = Some("fxsr,sse,sse2")
+running: "c++" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-m64" "-fno-exceptions" "-fno-rtti" "-DIMGUI_USE_WCHAR32" "-DCIMGUI_NO_EXPORT" "-DIMGUI_DISABLE_WIN32_FUNCTIONS" "-DIMGUI_DISABLE_OSX_FUNCTIONS" "-o" "/home/chris/Documents/projects/imgui-testing/target/debug/build/imgui-sys-f3274238e942fca0/out/include_imgui_master.o" "-c" "include_imgui_master.cpp"
+exit status: 0
+AR_x86_64-unknown-linux-gnu = None
+AR_x86_64_unknown_linux_gnu = None
+HOST_AR = None
+AR = None
+running: "ar" "cq" "/home/chris/Documents/projects/imgui-testing/target/debug/build/imgui-sys-f3274238e942fca0/out/libcimgui.a" "/home/chris/Documents/projects/imgui-testing/target/debug/build/imgui-sys-f3274238e942fca0/out/include_imgui_master.o"
+exit status: 0
+running: "ar" "s" "/home/chris/Documents/projects/imgui-testing/target/debug/build/imgui-sys-f3274238e942fca0/out/libcimgui.a"
+exit status: 0
+cargo:rustc-link-lib=static=cimgui
+cargo:rustc-link-search=native=/home/chris/Documents/projects/imgui-testing/target/debug/build/imgui-sys-f3274238e942fca0/out
+CXXSTDLIB_x86_64-unknown-linux-gnu = None
+CXXSTDLIB_x86_64_unknown_linux_gnu = None
+HOST_CXXSTDLIB = None
+CXXSTDLIB = None
+cargo:rustc-link-lib=stdc++
