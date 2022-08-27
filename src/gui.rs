@@ -4,7 +4,6 @@ use imgui::Context;
 use imgui_glow_renderer::AutoRenderer;
 use imgui_sdl2_support::SdlPlatform;
 use rand::Rng;
-use sdl2::sys::SDL_GL_SetAttribute;
 use sdl2::{
     event::Event,
     keyboard::Keycode,
@@ -25,14 +24,14 @@ pub fn run_gui() {
 
     /* hint SDL to initialize an OpenGL 3.3 core profile context */
     let gl_attr = video_subsystem.gl_attr();
-    //TODO:REMOVE ME IF YOU DONT WANT A DEBUG CONTEXT
+    //TODO:REMOVE ME IF YOU DONT WANT An SDL DEBUG CONTEXT
     gl_attr.set_context_flags().debug().set();
 
     gl_attr.set_context_version(3, 3);
     gl_attr.set_context_profile(GLProfile::Core);
 
     /* create a new window, be sure to call opengl method on the builder when using glow! */
-    let mut window = video_subsystem
+    let window = video_subsystem
         .window("Hello imgui-rs!", 1280, 720)
         .allow_highdpi()
         .opengl()
@@ -76,7 +75,7 @@ pub fn run_gui() {
         renderer.gl_context().debug_message_callback(debug_handler);
     }
 
-    let test_texture = screen::new(&renderer.gl_context(), &mut textures, &frame);
+    //let test_texture = Screen::new(&renderer.gl_context(), &mut textures, &frame);
     'main: loop {
         for event in event_pump.poll_iter() {
             /* pass all events to imgui platfrom */
@@ -108,9 +107,10 @@ pub fn run_gui() {
         ui.window("test texture")
             .size([256.0, 240.0], Condition::FirstUseEver)
             .build(|| {
-                //let mut test_texture = screen::new(&renderer.gl_context(), &mut textures, &frame);
+                let mut test_texture = Screen::new(&renderer.gl_context(), &mut textures, &frame);
                 //test_texture.update(&renderer.gl_context(), &frame);
-                imgui::Image::new(test_texture.texture_id, test_texture.size).build(ui);
+                //imgui::Image::new(test_texture.texture_id, test_texture.size).build(ui);
+                test_texture.show(ui);
             });
 
         ui.show_metrics_window(&mut true);
@@ -125,12 +125,12 @@ pub fn run_gui() {
     }
 }
 
-struct screen {
+struct Screen {
     texture_id: imgui::TextureId,
     size: [f32; 2],
 }
 
-impl screen {
+impl Screen {
     fn new(
         gl: &glow::Context,
         textures: &mut imgui::Textures<glow::Texture>,
@@ -211,7 +211,7 @@ fn mutate(buffer: &mut Vec<u8>) {
     }
 }
 
-fn debug_handler(source: u32, err_type: u32, id: u32, severity: u32, msg: &str) {
+fn debug_handler(_source: u32, _err_type: u32, _id: u32, severity: u32, msg: &str) {
     match severity {
         glow::DEBUG_SEVERITY_NOTIFICATION => {
             println!("NOTIFICATION: {}", msg)
