@@ -1,4 +1,4 @@
-use glow::HasContext;
+/*use glow::HasContext;
 use imgui::Condition;
 use imgui::Context;
 use imgui_glow_renderer::AutoRenderer;
@@ -227,4 +227,4 @@ fn debug_handler(_source: u32, _err_type: u32, _id: u32, severity: u32, msg: &st
         }
         _ => println!("got an error with an invalid severity level"),
     }
-}
+} */

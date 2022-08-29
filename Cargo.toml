@@ -11,7 +11,8 @@ glow = "0.10.0"
 sdl2 = "0.34.5"
 rand = "0.8.5"
 
-imgui-glow-renderer = {git =  "https://github.com/imgui-rs/imgui-rs.git"}
+#imgui-glow-renderer = {git =  "https://github.com/imgui-rs/imgui-rs.git"}
+imgui-glium-renderer = {git =  "https://github.com/imgui-rs/imgui-rs.git"}
 
 imgui-sdl2-support = {git =  "https://github.com/imgui-rs/imgui-rs.git"}
 
