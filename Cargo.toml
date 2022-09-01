@@ -15,6 +15,10 @@ rand = "0.8.5"
 imgui-glium-renderer = {git =  "https://github.com/imgui-rs/imgui-rs.git"}
 
 imgui-sdl2-support = {git =  "https://github.com/imgui-rs/imgui-rs.git"}
+ahash = "0.8.0"
+wgpu = {version = "0.13.1", features = ["spirv"]}
+winit = "0.27.2"
+
 
 
 
